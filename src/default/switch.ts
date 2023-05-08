@@ -1,14 +1,44 @@
+enum ISwitchSize {
+  SMALL = "sm",
+  MEDIUM = "md",
+  LARGE = "lg",
+}
+
+enum ISwitchDimesnsions {
+  SMALLHEIGHT = "25px",
+  SMALLWIDTH = "50px",
+}
 export default class Switch {
-  private switchEl: HTMLElement;
+  private size: ISwitchSize;
+  public switchEl: HTMLElement;
   private document: Document;
   constructor(document: Document) {
     this.document = document;
   }
 
-  public createHtml() {
+  private getSwitchHeight(size: ISwitchSize) {
+    switch (size) {
+      case ISwitchSize.SMALL:
+      default:
+        return ISwitchDimesnsions.SMALLHEIGHT;
+    }
+  }
+
+  private getSwitchWidth(size: ISwitchSize) {
+    switch (size) {
+      case ISwitchSize.SMALL:
+      default:
+        return ISwitchDimesnsions.SMALLWIDTH;
+    }
+  }
+
+  public createHtml(size?: ISwitchSize) {
+    this.size = size;
     this.switchEl = this.document.createElement("label");
     this.switchEl.innerHTML = `<input type="checkbox" />
-    <span class="slider round"></span>`;
+    <span class="slider ${size ?? ISwitchSize.SMALL} round" style=" height: ${
+      this.getSwitchHeight(size) ?? "initial"
+    }; width: ${this.getSwitchWidth(size) ?? "initial"};"></span>`;
     return this;
   }
 
